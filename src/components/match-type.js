@@ -1,23 +1,41 @@
 import * as React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./match-type.css";
 function MatchType() {
+  const [matchType, setmatchType] = useState();
   return (
     <div className="container-fluid">
       <div className="row">
         <div className="col-sm-12">
-          <select className="form-select" aria-label="Default select example">
-            <option value="0" selected>
-              Tournament
-            </option>
-            <option value="1">Friendly</option>
+          <label className="form-label">Choose Match Type</label>
+          <select
+            onChange={(event) => {
+              setmatchType(event.target.value);
+            }}
+            className="form-select"
+          >
+            <option value="none">Choose Match Type (default - Tournament)</option>
+            <option value="tournament">Tournament</option>
+            <option value="Friendly">Friendly</option>
           </select>
         </div>
         <div className="col-sm-6"> </div>
         <div className="col-sm-6">
-          <button type="button" className="btn btn-success">
-            <Link to="/page2">Next</Link>
-          </button>
+          <Link to={`/details`}>
+            <button
+              type="button"
+              onClick={() => {
+                localStorage.setItem("matchType", matchType);
+                if (matchType === undefined) {
+                  localStorage.setItem("matchType", "Tournament");
+                }
+              }}
+              className="btn btn-success"
+            >
+              Next
+            </button>
+          </Link>
         </div>
       </div>
     </div>
