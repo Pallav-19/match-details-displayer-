@@ -1,105 +1,101 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
-import { useState } from "react";
 import "./details.css";
 import { Link } from "react-router-dom";
+import detailsContext from "../Contexts/DetailsContext";
 const TeamDetails = () => {
-  const [tn1, settn1] = useState();
-  const [tn2, settn2] = useState();
-  const [tv1, settv1] = useState();
-  const [tv2, settv2] = useState();
-
+  const { tn1, tn2, tv1, tv2, settn1, settn2, settv1, settv2 } =
+    React.useContext(detailsContext);
   return (
-    <div className="container-fluid">
-      <div className="row">
-        <div className="col-sm-6">
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">
-              Team 1 name
-            </label>
-            <input
-              onChange={(e) => {
-                settn1(e.target.value);
-              }}
-              type="text"
-              class="form-control"
-              id="exampleFormControlInput1"
-            />
-          </div>
-        </div>
-        <div className="col-sm-6">
-          <label class="form-label">Select Whether Home or Away</label>
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            onChange={(e) => {
-              settv1(e.target.value);
-            }}
-          >
-            <option value="none">Home/Away</option>
-            <option value="Home">Home</option>
-            <option value="Away">Away</option>
-          </select>
-        </div>
-      </div>
-      <div className="vs">VS.</div>
-      <div className="row">
-        <div className="col-sm-6">
-          <div class="mb-3">
-            <label for="exampleFormControlInput1" class="form-label">
-              Team 2 name
-            </label>
-            <input
-              onChange={(e) => {
-                settn2(e.target.value);
-              }}
-              type="text"
-              class="form-control"
-              id="exampleFormControlInput1"
-            />
-          </div>
-        </div>
-        <div className="col-sm-6">
-          <label class="form-label">Select Whether Home or Away</label>
-          <select
-            class="form-select"
-            aria-label="Default select example"
-            onChange={(e) => {
-              settv2(e.target.value);
-            }}
-          >
-            <option value="none">Home/Away</option>
-            <option value="Home">Home</option>
-            <option value="Away">Away</option>
-          </select>
-        </div>
-        <div class="row">
-          <div class="col-sm-6">
-            {" "}
-            <Link to="/details">
-              <button type="button" className="btn btn-secondary pre">
-                Previous
-              </button>
-            </Link>
-          </div>
-          <div class="col-sm-6">
-            <Link to="/">
-              <button
-                type="button"
-                className="btn btn-success"
-                onClick={() => {
-                  localStorage.setItem("tn1", tn1);
-                  localStorage.setItem("tv1", tv1);
-                  localStorage.setItem("tn2", tn2);
-                  localStorage.setItem("tv2", tv2);
+    <>
+      <h3>Enter Team Details</h3>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-sm-6">
+            <div className="mb-3">
+              <label htmlFor="exampleFormControlInput1" className="form-label">
+                Team 1 name
+              </label>
+              <input
+                onChange={(e) => {
+                  settn1(e.target.value);
                 }}
-              >
-                Next
-              </button>
-            </Link>
+                type="text"
+                className="form-control"
+                id="exampleFormControlInput1"
+                value={tn1}
+              />
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <label className="form-label">Select Whether Home or Away</label>
+            <select
+              value={tv1}
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) => {
+                settv1(e.target.value);
+              }}
+            >
+              <option value="none">Choose Home/Away</option>
+              <option value="Home">Home</option>
+              <option value="Away">Away</option>
+            </select>
+          </div>
+        </div>
+        <div className="vs">VS.</div>
+        <div className="row">
+          <div className="col-sm-6">
+            <div className="mb-3">
+              <label htmlFor="exampleFormControlInput1" className="form-label">
+                Team 2 name
+              </label>
+              <input
+                value={tn2}
+                onChange={(e) => {
+                  settn2(e.target.value);
+                }}
+                type="text"
+                className="form-control"
+                id="exampleFormControlInput1"
+              />
+            </div>
+          </div>
+          <div className="col-sm-6">
+            <label className="form-label">Select Whether Home or Away</label>
+            <select
+              value={tv2}
+              className="form-select"
+              aria-label="Default select example"
+              onChange={(e) => {
+                settv2(e.target.value);
+              }}
+            >
+              <option value="none">Choose Home/Away</option>
+              <option value="Home">Home</option>
+              <option value="Away">Away</option>
+            </select>
+          </div>
+          <div className="row">
+            <div className="col-sm-6">
+              {" "}
+              <Link to="/details">
+                <button type="button" className="btn btn-secondary pre">
+                  Previous
+                </button>
+              </Link>
+            </div>
+            <div className="col-sm-6">
+              <Link to="/">
+                <button type="button" className="btn btn-success">
+                  Next
+                </button>
+              </Link>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,74 +1,92 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import detailsContext from "../Contexts/DetailsContext";
 function Table() {
-  const [matches, setMatches] = useState([]);
+  const {
+    start,
+    matchType,
+    end,
+    location,
+    tournamentname,
+    comment,
+    tn1,
+    tn2,
+    tv1,
+    tv2,
+    details,
+    setDetails,
+  } = React.useContext(detailsContext);
   useEffect(() => {
-    return () => {
-      setMatches([
-        ...matches,
-        {
-          tn1: localStorage.getItem("tn1"),
-          tn2: localStorage.getItem("tn2"),
-          tv1: localStorage.getItem("tv1"),
-          tv2: localStorage.getItem("tv2"),
-          location: localStorage.getItem("location"),
-          matchType: localStorage.getItem("matchType"),
-          tournamentName: localStorage.getItem("tournamentname"),
-          start: localStorage.getItem("start"),
-          end: localStorage.getItem("end"),
-          comments: localStorage.getItem("comment"),
-        },
-      ]);
-
-    };
-  },[]);
+    setDetails([
+      ...details,
+      {
+        start,
+        matchType,
+        end,
+        location,
+        tournamentname,
+        comment,
+        tn1,
+        tn2,
+        tv1,
+        tv2,
+      },
+    ]);
+    
+  }, []);
   return (
     <div>
-      
-        <table class="table">
-          <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Team 1</th>
-              <th scope="col">Team 2</th>
-              <th scope="col">Match Type</th>
-              <th scope="col">Tournament Name</th>
-              <th scope="col">Start Date and Time</th>
-              <th scope="col">End Date and Time</th>
-              <th scope="col">Location</th>
-              <th scope="col">Comments</th>
-            </tr>
-          </thead>
-          <tbody>
-            {matches.map((match, index) => {
-              let tn = match.tournamentName;
-              if (!match.tournamentName) {
-                tn = " ";
-              }
-              const s = new Date(match.start).toDateString();
-              const e = new Date(match.end).toDateString();
-              return (
-                <tr>
-                  <th scope="row">{index + 1}</th>
-                  <td>{match.tn1}</td>
-                  <td>{match.tn2}</td>
-                  <td>{match.matchType}</td>
-                  <td>{tn}</td>
-                  <td>{s}</td>
-                  <td>{e}</td>
-                  <td>{match.location}</td>
-                  <td>{match.comments}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-     
-      
+      {details.length > 1 ? (
+        <div style={{ overflow: "scroll" }} className="container-fluid">
+          <table className="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Team 1</th>
+                <th scope="col">Team 2</th>
+                <th scope="col">Match Type</th>
+                <th scope="col">Tournament Name</th>
+                <th scope="col">Start Date and Time</th>
+                <th scope="col">End Date and Time</th>
+                <th scope="col">Location</th>
+                <th scope="col">Comments</th>
+              </tr>
+            </thead>
+            <tbody>
+              {details.map((match, index) => {
+                  let tn = match.tournamentname;
+                  if (!match.tournamentname) {
+                    tn = " ";
+                  }
+                  const s = new Date(match.start).toDateString();
+                  const e = new Date(match.end).toDateString();
+                  return (
+                    <tr key={match.tn1 + match.tn2}>
+                      <th scope="row">{index + 1}</th>
+                      <td>{match.tn1}</td>
+                      <td>{match.tn2}</td>
+                      <td>{match.matchType}</td>
+                      <td>{tn}</td>
+                      <td>{match.start}</td>
+                      <td>{match.end}</td>
+                      <td>{match.location}</td>
+                      <td>{match.comment}</td>
+                    </tr>
+                  );
+                })}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <h2>No Matches Scheduled Yet</h2>
+      )}
+
       <Link to="/matchdetails">
         <button type="button" className="btn btn-danger pre">
-          Schedule another match
+          Schedule a match
         </button>
       </Link>
     </div>
